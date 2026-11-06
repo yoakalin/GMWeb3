@@ -1,7 +1,9 @@
 /* GM Web3 — 網站資料
- * 想改個人資訊、邀請碼或教學內容，只要改這個檔案即可。
+ * 想改個人資訊、邀請碼、交易所教學，只要改這個檔案即可。
+ * 教學章節在 js/chapters.js。
  */
-window.SITE = {
+window.SITE = window.SITE || {};
+Object.assign(window.SITE, {
   profile: {
     name: "Yoaka",
     title: "Yoakaの人生實驗室",
@@ -12,15 +14,151 @@ window.SITE = {
     linktree: "https://linktr.ee/yoaka"
   },
 
-  /* 交易所邀請碼：code = 顯示給讀者複製的邀請碼；url = 邀請連結 */
+  /* 交易所：陣列順序＝網站顯示順序（MEXC 置頂）
+   * code = 顯示給讀者複製的邀請碼；url = 邀請連結；slug = 教學文章網址 #/ex/slug */
   exchanges: [
-    { name: "Binance", zh: "幣安", code: "DXzKnO", url: "https://www.binance.com/join?ref=XI9YZALA", color: "#F0B90B", type: "CEX", desc: "全球交易量最大的交易所之一，幣種多、流動性深，現貨與合約都很完整。" },
-    { name: "OKX", zh: "歐易", code: "62626519", url: "https://www.okx.com/join/62626519", color: "#9ca3af", type: "CEX", desc: "交易所 + Web3 錢包雙棲，鏈上撸毛、DEX 兌換與跨鏈都能在同一個 App 完成。" },
-    { name: "Bitget", zh: "", code: "cnkx6399", url: "https://share.bitget.com/u/PDVNM481", color: "#00F0FF", type: "CEX", desc: "以跟單交易聞名，合約產品豐富，新幣上架速度快。" },
-    { name: "MEXC", zh: "抹茶", code: "yoaka777", url: "https://promote.mexc.com/a/5RmvaOMx", color: "#2F7BFF", type: "CEX", desc: "上新幣非常快、小幣種齊全，現貨手續費低，適合追早期項目。" },
-    { name: "Backpack", zh: "", code: "yoaka", url: "https://backpack.exchange/refer/yoaka", color: "#E33E3F", type: "CEX", desc: "Solana 生態出身的合規交易所，介面簡潔，常有積分活動。" },
-    { name: "Flipster", zh: "", code: "YOAKAETH", url: "https://flipster.xyz/signin?referral_code=YOAKAETH", color: "#7C3AED", type: "CEX", desc: "主打永續合約的交易平台，介面直覺、上手容易。" },
-    { name: "Pionex", zh: "派網", code: "VmLjUbps", url: "https://www.pionex.com/sign/ref/VmLjUbps", color: "#F97316", type: "量化", desc: "內建網格、定投等免費量化機器人，適合想自動化交易的新手。" }
+    {
+      slug: "mexc", name: "MEXC", zh: "抹茶", code: "yoaka777", url: "https://promote.mexc.com/a/5RmvaOMx",
+      color: "#2F7BFF", type: "CEX", pinned: true,
+      desc: "上新幣超快、小幣種最齊，現貨掛單 0 手續費，追早期項目必備。",
+      guide: {
+        updated: "2026-11",
+        summary: "MEXC（抹茶）是以「上新幣快、幣種多、手續費低」出名的交易所，很多鏈上剛火起來的幣，第一個上的 CEX 常常就是 MEXC。這是我自己追新幣、撸毛後換幣最常用的平台。",
+        facts: [["成立", "2018 年"], ["主打", "新幣、小幣、低手續費"], ["現貨費率", "Maker 0%／Taker 約 0.05%"], ["合約費率", "Maker 0%／Taker 約 0.02%"], ["邀請碼", "yoaka777"]],
+        sections: [
+          { title: "MEXC 適合誰？", html: `<ul><li>✅ 想第一時間買到新幣、Meme、小市值幣的人</li><li>✅ 交易頻繁、在意手續費的人</li><li>✅ 撸毛領到代幣後想找地方賣的人</li><li>⚠️ 新幣多也代表垃圾幣多，上架≠安全，請先讀<a href="#/c/11">怎麼研究一個項目</a></li></ul>` },
+          { title: "Step 1：用邀請碼註冊", html: `<ol><li>點本頁的「立即註冊」進入 MEXC 官方邀請頁（或下載官方 App）。</li><li>選擇 Email 或手機號註冊，設定密碼。</li><li>確認邀請碼欄位為 <code>yoaka777</code>（用我的連結會自動帶入；沒帶入就手動貼上）。</li><li>輸入信箱／簡訊驗證碼，完成註冊。</li></ol><p>⚠️ 邀請碼一定要在<strong>註冊當下</strong>填，事後通常不能補。</p>` },
+          { title: "Step 2：完成 KYC 身分驗證", html: `<p>MEXC 的規則比較寬鬆：未完成 KYC 也能交易，但<strong>提現額度與部分功能會受限</strong>。建議還是完成初級認證，提領額度更高，新手任務獎勵通常也要求 KYC。</p><ol><li>App 首頁點頭像 →「身分認證」。</li><li>選國籍，上傳身分證或護照正反面。</li><li>依指示完成人臉辨識，通常幾分鐘到數小時內審核完成。</li></ol>` },
+          { title: "Step 3：安全設定（別跳過）", html: `<ul><li>綁定 Google Authenticator 驗證器</li><li>設定防釣魚碼</li><li>開啟提現白名單</li><li>資金密碼和登入密碼不要一樣</li></ul>` },
+          { title: "Step 4：台灣用戶怎麼入金", html: `<p>MEXC 沒有封鎖台灣 IP，台灣用戶可以正常開戶與交易。最常用的入金方式：</p><ol><li><strong>台灣交易所轉 USDT（最推薦）</strong>：在 MAX、BitoPro 等台灣交易所用台幣買 USDT → MEXC「資產」→「充值」→ 選 USDT 與 <strong>TRC20</strong> 網路 → 複製地址 → 回台灣交易所提領。手續費低、到帳快。</li><li><strong>P2P（C2C）買幣</strong>：只選平台認證、成交率高的商家。</li><li><strong>信用卡／第三方買幣</strong>：方便但費用較高。</li></ol><p>入金後如果在「資金帳戶」，記得劃轉到「現貨帳戶」才能交易。</p>` },
+          { title: "Step 5：買第一顆幣", html: `<ol><li>點「現貨」→ 搜尋幣種（例如 BTC/USDT）。</li><li>選「限價」輸入價格與數量，或「市價」直接成交。</li><li>買新幣前先到幣種資訊頁核對<strong>合約地址</strong>，確認不是同名假幣。</li></ol>` },
+          { title: "手續費與 MX 折扣", html: `<table><thead><tr><th></th><th>Maker（掛單）</th><th>Taker（吃單）</th></tr></thead><tbody><tr><td>現貨</td><td>0%</td><td>約 0.05%</td></tr><tr><td>合約</td><td>0%</td><td>約 0.02%</td></tr></tbody></table><p>持有平台幣 MX 或用 MX 抵扣手續費可再享折扣。MEXC 常會調整費率與活動，<strong>請以官網費率頁為準</strong>；用 API 下單的費率表也不同。</p>` },
+          { title: "出金：怎麼換回台幣", html: `<ol><li>把幣賣成 USDT，劃轉到資金帳戶。</li><li>「提現」→ 貼上台灣交易所的 USDT 充值地址，網路選 <strong>TRC20</strong>（兩邊一定要一致）。</li><li>到台灣交易所把 USDT 賣成台幣，提領到銀行。</li></ol><p>大額台幣進出可能觸發銀行洗錢防制詢問，保留交易紀錄；海外交易所所得也要留意申報規定。</p>` },
+          { title: "注意事項", html: `<ul><li>MEXC 不受台灣金管會監管，資產不要全部放在單一平台。</li><li>新幣上線初期波動極大，有些幣會在短時間內暴跌或被下架。</li><li>只從官網或官方 App 登入，小心假網站。</li></ul>` }
+        ]
+      }
+    },
+    {
+      slug: "binance", name: "Binance", zh: "幣安", code: "DXzKnO", url: "https://www.binance.com/join?ref=XI9YZALA",
+      color: "#F0B90B", type: "CEX",
+      desc: "全球交易量最大的交易所之一，幣種多、流動性深，現貨合約理財都齊全。",
+      guide: {
+        updated: "2026-11",
+        summary: "幣安（Binance）是全球規模最大的加密貨幣交易所之一，流動性好、產品最完整，從現貨、合約、理財到 Launchpool 都有，也設有 SAFU 用戶保障基金。新手想找一間「什麼都有」的主力交易所，幣安是很穩的選擇。",
+        facts: [["成立", "2017 年"], ["主打", "流動性、產品完整度"], ["現貨費率", "Maker／Taker 0.1%（BNB 抵扣 75 折）"], ["保障", "SAFU 用戶保障基金"], ["邀請碼", "DXzKnO"]],
+        sections: [
+          { title: "幣安適合誰？", html: `<ul><li>✅ 第一次開海外交易所、想要一間主力平台</li><li>✅ 交易主流幣，在意深度與成交品質</li><li>✅ 想參與 Launchpool、理財、Alpha 新幣活動</li></ul>` },
+          { title: "開戶前準備", html: `<ul><li>Email 或手機號碼</li><li>身分證件（護照最通用；部分國家可用身分證或駕照）</li><li>可以拍照與人臉辨識的手機</li></ul><p>開戶大約 5 分鐘，KYC 通常 5–15 分鐘內自動審核完成。</p>` },
+          { title: "Step 1：用邀請連結註冊", html: `<ol><li>點本頁「立即註冊」，或下載官方 Binance App。</li><li>輸入 Email／手機，設定密碼。</li><li>確認推薦碼欄位已自動帶入（用我的連結會自動帶入）。</li><li>完成信箱／簡訊驗證。</li></ol>` },
+          { title: "Step 2：KYC 身分驗證", html: `<ol><li>App →「身分認證」→ 選擇居住國家。</li><li>上傳證件，填寫個人資料與地址。</li><li>完成人臉驗證，等待審核。</li></ol><p>沒有 KYC 幾乎無法入金與交易，建議註冊完就一次做完。</p>` },
+          { title: "Step 3：安全設定", html: `<ul><li>驗證器 App 或 Passkey 雙重驗證</li><li>防釣魚碼（幣安官方信件會帶上）</li><li>提現白名單</li><li>定期檢查登入裝置</li></ul>` },
+          { title: "Step 4：台灣用戶入金方式", html: `<ol><li><strong>台灣交易所買 USDT 再轉入（手續費最低）</strong>：在 MAX、BitoPro 用台幣買 USDT → 幣安「錢包」→「充值」→ USDT → 網路選 <strong>TRC20</strong> → 複製地址到台灣交易所提領。</li><li><strong>P2P 幣幣交易</strong>：目前台灣無法用台幣 P2P 直接入金，需要先換成加密貨幣再橋接，以官網顯示為準。</li><li><strong>信用卡買幣</strong>：最快，但費率較高。</li><li><strong>美元電匯</strong>：適合大額，需要外幣帳戶。</li></ol>` },
+          { title: "Step 5：買幣", html: `<p>新手可以先用「閃兌」熟悉流程，再到「現貨交易」練習限價單。閃兌和現貨的報價方式不同，比較時看最後到手數量。</p>` },
+          { title: "手續費", html: `<p>現貨 Maker／Taker 各 0.1%，開啟「使用 BNB 抵扣手續費」可打 75 折，再加上邀請碼返佣更省。VIP 等級越高費率越低。費率以官網為準。</p>` },
+          { title: "出金", html: `<p>賣成 USDT → 提現到台灣交易所的 USDT 地址（網路兩邊要一致）→ 在台灣交易所賣成台幣提領。第一次提現先小額測試。</p>` },
+          { title: "注意事項", html: `<ul><li>幣安在各國的服務範圍會隨法規調整，請以官網公告為準。</li><li>網路上有大量幣安假網站與假客服，只從書籤或官方 App 進入。</li><li>邀請碼說明：我的 Linktree 標示邀請碼為 DXzKnO，邀請連結內參數為 XI9YZALA，用連結註冊會自動帶入。</li></ul>` }
+        ]
+      }
+    },
+    {
+      slug: "okx", name: "OKX", zh: "歐易", code: "62626519", url: "https://www.okx.com/join/62626519",
+      color: "#9ca3af", type: "CEX",
+      desc: "交易所＋Web3 錢包雙棲，台幣 P2P 可直接買 U，撸毛、DEX、跨鏈一個 App 搞定。",
+      guide: {
+        updated: "2026-11",
+        summary: "OKX 是全球前幾大交易所，最大特色是同一個 App 裡同時有中心化交易所和功能完整的 Web3 錢包，撸毛、鏈上兌換、跨鏈都很方便；台灣用戶也能用台幣 P2P 直接買 USDT，是我很推薦給新手的第一間交易所。",
+        facts: [["主打", "交易所＋Web3 錢包"], ["台幣入金", "支援 P2P 買 USDT"], ["現貨費率", "約 Maker 0.08%／Taker 0.1%"], ["KYC", "需完成 Level 1 才能交易與出金"], ["邀請碼", "62626519"]],
+        sections: [
+          { title: "OKX 適合誰？", html: `<ul><li>✅ 想用台幣直接買 USDT 的台灣新手</li><li>✅ 想玩鏈上、撸毛空投（內建 Web3 錢包）</li><li>✅ 想要交易所和錢包在同一個 App 裡管理</li></ul>` },
+          { title: "Step 1：用邀請連結註冊", html: `<ol><li>點本頁「立即註冊」或下載官方 OKX App。</li><li>選擇國家／地區，輸入 Email 或手機。</li><li>確認邀請碼為 <code>62626519</code>。</li><li>完成驗證碼、設定密碼。</li></ol>` },
+          { title: "Step 2：KYC（必做）", html: `<p>OKX 自 2024 年起要求完成 Level 1 身分驗證才能交易與出金。</p><ol><li>個人中心 →「身分認證」。</li><li>上傳身分證、護照或駕照。</li><li>完成人臉辨識，等待審核。</li></ol>` },
+          { title: "Step 3：安全設定", html: `<ul><li>驗證器 2FA、防釣魚碼、提現白名單</li><li>資金密碼和登入密碼不同</li><li>Web3 錢包的助記詞（或 MPC 備份）要另外妥善保存</li></ul>` },
+          { title: "Step 4：台灣用戶三種入金", html: `<ol><li><strong>台幣 P2P 買 USDT</strong>：「買幣」→「P2P 交易」→ 選 TWD 與 USDT → 挑認證商家 → 照訂單用本人帳戶轉帳 → 按「已付款」→ 商家放幣。平台本身不收 P2P 手續費。</li><li><strong>信用卡買幣</strong>：透過第三方服務，費用約 2–3.5%。</li><li><strong>從台灣交易所轉入</strong>：在 BitoPro、MAX 買 USDT → OKX「充值」複製地址 → 網路選 TRC20 或 Arbitrum One 等低費網路。</li></ol>` },
+          { title: "Step 5：交易所與 Web3 錢包切換", html: `<p>App 上方可以在「交易所」和「錢包」之間切換。交易所的資產要「提現」到自己的 Web3 錢包地址才會上鏈，兩邊不是同一個帳戶。</p>` },
+          { title: "手續費", html: `<p>一般用戶現貨約 Maker 0.08%／Taker 0.1%，持有 OKB 或交易量提高可降級費率。實際以官網費率頁為準。</p>` },
+          { title: "出金", html: `<p>常見做法：USDT 用 P2P 賣成台幣（只認本人帳戶真實入帳才放幣），或轉回台灣交易所賣出再提領。網路一定要選對。</p>` },
+          { title: "注意事項", html: `<ul><li>P2P 小心黑錢：只接受本人帳戶付款，不接受第三方代付。</li><li>Web3 錢包連 DApp 時要看清楚授權內容，詳見<a href="#/c/09">安全與防詐</a>。</li><li>服務範圍以官網公告為準。</li></ul>` }
+        ]
+      }
+    },
+    {
+      slug: "bitget", name: "Bitget", zh: "", code: "cnkx6399", url: "https://share.bitget.com/u/PDVNM481",
+      color: "#00F0FF", type: "CEX",
+      desc: "跟單交易龍頭，合約產品豐富，新幣上架快，新手可以直接跟著高手下單。",
+      guide: {
+        updated: "2026-11",
+        summary: "Bitget 成立於 2018 年、總部在新加坡，最有名的是「跟單交易」：可以查看交易員的歷史績效，一鍵跟著他們下單。合約產品和新幣上架也很積極，近年還推出代幣化美股等新產品。",
+        facts: [["成立", "2018 年"], ["主打", "跟單交易、合約"], ["現貨費率", "Maker／Taker 0.1%（BGB 抵扣 8 折）"], ["出金條件", "需完成 KYC Level 1"], ["邀請碼", "cnkx6399"]],
+        sections: [
+          { title: "Bitget 適合誰？", html: `<ul><li>✅ 沒時間看盤、想參考高手操作的人（跟單）</li><li>✅ 想交易合約、新幣的人</li><li>⚠️ 跟單不等於穩賺，交易員過去績效不代表未來</li></ul>` },
+          { title: "Step 1：用邀請連結註冊", html: `<ol><li>點本頁「立即註冊」或下載官方 Bitget App。</li><li>輸入 Email／手機、設定密碼。</li><li>確認邀請碼已帶入（我的邀請碼：<code>cnkx6399</code>）。</li><li>完成驗證。</li></ol>` },
+          { title: "Step 2：KYC 與安全設定", html: `<p>出金前必須完成 KYC Level 1（身分證件＋人臉辨識）。完成後立刻設定驗證器 2FA、防釣魚碼和提現白名單。</p>` },
+          { title: "Step 3：台灣用戶入金", html: `<p>目前無法直接用台幣入金 Bitget，常見路線：</p><ol><li><strong>台灣交易所轉 USDT（推薦）</strong>：在 MAX 或 BitoPro 買 USDT → Bitget「充值」→ USDT → TRC20 → 複製地址提領過來。Bitget 不收充值費，只有轉出方的網路費。</li><li><strong>P2P</strong>：平台不收費，但商家報價可能有價差，一定要選認證商家、只用本人帳戶。</li><li><strong>信用卡</strong>：費用約 3–4%，最貴。</li></ol>` },
+          { title: "Step 4：怎麼跟單", html: `<ol><li>進入「跟單」頁面，篩選交易員。</li><li>看<strong>歷史報酬、最大回撤、跟單人數、帶單時間</strong>，不要只看近 7 天報酬。</li><li>設定跟單金額、單筆上限、止損比例。</li><li>先用小額跟一段時間，觀察後再調整。</li></ol><p>跟單的交易員通常會從獲利中抽成，條件以頁面顯示為準。</p>` },
+          { title: "手續費", html: `<p>現貨 Maker／Taker 約 0.1%，用 BGB 抵扣可享 8 折；合約費率另計。費率與活動以官網為準。</p>` },
+          { title: "出金", html: `<p>把 USDT 提到台灣交易所（網路要一致）→ 賣成台幣 → 提領到銀行。第一次先小額測試。</p>` },
+          { title: "注意事項", html: `<ul><li>Bitget 為境外平台，可用產品會受地區與 KYC 限制。</li><li>跟單合約一樣有爆倉風險，請設好止損與跟單上限。</li><li>邀請碼說明：Linktree 標示邀請碼為 cnkx6399，邀請連結為 PDVNM481，用連結註冊會自動帶入。</li></ul>` }
+        ]
+      }
+    },
+    {
+      slug: "backpack", name: "Backpack", zh: "", code: "yoaka", url: "https://backpack.exchange/refer/yoaka",
+      color: "#E33E3F", type: "CEX",
+      desc: "Solana 生態出身的合規交易所，介面簡潔，常有積分與空投活動。",
+      guide: {
+        updated: "2026-11",
+        summary: "Backpack 由 Solana 生態知名團隊打造（同時也有 Backpack 錢包與 Mad Lads NFT），主打合規與簡潔介面，並收購了 FTX EU 處理歐洲用戶的資產返還。平台常有積分（Points）活動，是撸毛玩家關注的交易所之一。",
+        facts: [["背景", "Solana 生態團隊"], ["主打", "合規、積分活動"], ["現貨費率", "Maker 0.08%／Taker 0.10%"], ["KYC", "證件＋活體驗證"], ["邀請碼", "yoaka"]],
+        sections: [
+          { title: "Backpack 適合誰？", html: `<ul><li>✅ Solana 生態玩家</li><li>✅ 想參與交易所積分、潛在空投的人</li><li>✅ 喜歡簡潔介面、重視合規的人</li></ul>` },
+          { title: "Step 1：用邀請連結註冊", html: `<ol><li>點本頁「立即註冊」（邀請碼 <code>yoaka</code> 會自動帶入）。</li><li>輸入 Email、設定密碼，完成信箱驗證。</li><li>帳戶類型選「個人帳戶」。</li></ol>` },
+          { title: "Step 2：KYC", html: `<p>依官方說明，個人 KYC 需要：</p><ul><li>全名、出生日期、地址</li><li>收入來源與職業</li><li>清晰有效的身分證件</li><li>活體檢測（Liveness check，人臉辨識）</li></ul><p>資料要和證件完全一致，避免審核卡關。</p>` },
+          { title: "Step 3：入金", html: `<ol><li><strong>鏈上轉入 USDC／USDT／SOL</strong>：從台灣交易所或其他平台提領過來，Solana 網路速度快、手續費低。</li><li><strong>美元電匯</strong>：部分地區支援，最低約 100 美元，必須從本人帳戶匯款。</li></ol>` },
+          { title: "Step 4：交易與積分", html: `<p>現貨 Maker 0.08%／Taker 0.10%，部分穩定幣交易對可能有免手續費優惠。平台會依交易量、持倉等發放積分，積分規則與是否兌換代幣以官方公告為準，<strong>積分不保證有價值</strong>。</p>` },
+          { title: "出金", html: `<p>把資產提到自己的錢包或台灣交易所（Solana 網路要選對），再換成台幣。</p>` },
+          { title: "注意事項", html: `<ul><li>台灣用戶能否開戶、入金通道與費率會變動，以官網為準。</li><li>為了刷積分而大量合約交易，手續費和爆倉風險可能遠大於獎勵。</li></ul>` }
+        ]
+      }
+    },
+    {
+      slug: "flipster", name: "Flipster", zh: "", code: "YOAKAETH", url: "https://flipster.xyz/signin?referral_code=YOAKAETH",
+      color: "#7C3AED", type: "合約",
+      desc: "專注永續合約，主打 0 手續費、一鍵反手，數百種合約可交易。",
+      guide: {
+        updated: "2026-11",
+        summary: "Flipster 成立於 2021 年，團隊來自量化交易公司，專注永續合約交易。主打「零手續費」與一鍵反向持倉（Instant Flip），可交易數百種主流幣、山寨幣與 Meme 幣的永續合約。",
+        facts: [["成立", "2021 年"], ["主打", "永續合約、0 手續費"], ["獲利模式", "買賣價差（Spread）"], ["槓桿", "最高約 100 倍"], ["邀請碼", "YOAKAETH"]],
+        sections: [
+          { title: "Flipster 適合誰？", html: `<ul><li>✅ 已經懂合約、想要介面直覺的人</li><li>✅ 交易頻繁、在意手續費的人</li><li>⚠️ <strong>完全沒碰過合約的新手先別來</strong>，先讀<a href="#/c/07">槓桿與風險管理</a></li></ul>` },
+          { title: "「零手續費」要看懂", html: `<p>Flipster 不靠手續費賺錢，而是靠<strong>買賣價差</strong>。也就是說，你的交易成本藏在開倉和平倉的價差裡，「0 手續費」不等於「0 成本」。下單時看清楚買價和賣價。</p>` },
+          { title: "Step 1：用邀請連結註冊", html: `<ol><li>點本頁「立即註冊」（邀請碼 <code>YOAKAETH</code> 自動帶入）。</li><li>點「Get started」，輸入 Email、設定密碼。</li><li>收驗證信完成註冊。</li></ol>` },
+          { title: "Step 2：KYC", html: `<p>到「帳戶驗證」選擇身分證驗證，上傳證件正反面並完成人臉掃描（由第三方 Sumsub 處理）。新戶獎勵通常要求完成較高等級的 KYC 與入金、交易量任務。</p>` },
+          { title: "Step 3：入金", html: `<p>從台灣交易所或其他平台提領 USDT 過來，網路選 TRC20 通常 1–3 分鐘到帳。入金後劃轉到交易帳戶即可開始。</p>` },
+          { title: "Step 4：開第一筆合約", html: `<ol><li>選幣種，決定做多或做空。</li><li><strong>槓桿先開 2–3 倍</strong>，選逐倉。</li><li>一定要設定止損。</li><li>需要反向時可用一鍵反手（Flip），但不要因為情緒來回追單。</li></ol>` },
+          { title: "注意事項", html: `<ul><li>高槓桿是 Flipster 的賣點，也是新手爆倉的主因。</li><li>平台的合規狀態依地區不同，使用前請確認。</li><li>交易競賽、獎勵活動都有條件，看清楚再參加。</li></ul>` }
+        ]
+      }
+    },
+    {
+      slug: "pionex", name: "Pionex", zh: "派網", code: "VmLjUbps", url: "https://www.pionex.com/sign/ref/VmLjUbps",
+      color: "#F97316", type: "量化",
+      desc: "內建 16 種以上免費交易機器人，網格、定投一鍵開，適合想自動化的新手。",
+      guide: {
+        updated: "2026-11",
+        summary: "Pionex 派網是以「免費交易機器人」聞名的交易所，內建 16 種以上機器人，最熱門的是網格交易和定期定額（DCA），不用寫程式就能讓策略 24 小時自動執行，手續費也很低。",
+        facts: [["主打", "免費量化機器人"], ["機器人", "16 種以上（網格、定投、馬丁…）"], ["現貨費率", "約 0.05%"], ["適合行情", "網格適合震盪盤"], ["邀請碼", "VmLjUbps"]],
+        sections: [
+          { title: "派網適合誰？", html: `<ul><li>✅ 沒時間盯盤、想要紀律化交易的人</li><li>✅ 想長期定投 BTC／ETH 的人</li><li>✅ 想學網格交易的新手</li></ul>` },
+          { title: "Step 1：用邀請連結註冊", html: `<ol><li>點本頁「立即註冊」（邀請碼 <code>VmLjUbps</code>）。</li><li>輸入 Email 或手機、設定密碼並完成驗證。</li><li>邀請碼的補填時間很短，<strong>務必在註冊時就填好</strong>。</li></ol>` },
+          { title: "Step 2：KYC 與安全", html: `<p>完成實名認證才能領取完整新戶獎勵與提高額度。之後設定驗證器 2FA 與提現白名單。</p>` },
+          { title: "Step 3：入金", html: `<p>派網曾開放超商用台幣買幣，但該功能已停止公測，台幣管道請以官網現況為準。目前最穩定的方式是：在台灣交易所買 USDT → 派網「充值」→ 選 USDT 與 TRC20 → 提領過來。</p>` },
+          { title: "Step 4：開第一個網格機器人", html: `<ol><li>「交易機器人」→「現貨網格」。</li><li>選幣對（新手建議 BTC/USDT）。</li><li>設定<strong>價格上限、下限、網格數量</strong>；不確定可以先用「AI 推薦參數」。</li><li>投入小額資金啟動，觀察一兩週。</li></ol><p>網格在區間內自動低買高賣，<strong>適合震盪盤</strong>；單邊大跌跌破下限時會滿手套牢，單邊大漲突破上限則會提早賣光。</p>` },
+          { title: "定投機器人（DCA）", html: `<p>設定固定金額與週期（每天／每週）自動買入，適合長期看好 BTC、ETH，又不想猜高低點的人。</p>` },
+          { title: "手續費", html: `<p>現貨約 0.05%，機器人本身免費，邀請碼另有折扣。以官網為準。</p>` },
+          { title: "注意事項", html: `<ul><li>機器人只是執行策略的工具，不保證獲利。</li><li>合約網格、槓桿網格有爆倉風險，新手先用現貨網格。</li><li>新戶活動有期限，參加前看清楚條件。</li></ul>` }
+        ]
+      }
+    }
   ],
 
   /* 社群連結 */
@@ -37,182 +175,85 @@ window.SITE = {
     { name: "Email", note: "qq0223lin@gmail.com", url: "mailto:qq0223lin@gmail.com", icon: "📮" }
   ],
 
-  /* 教學章節 */
-  chapters: [
-    {
-      id: "01", emoji: "🌏", title: "Web3 是什麼？", intro: "區塊鏈、加密貨幣、錢包、交易所一次搞懂",
-      sections: [
-        { title: "一句話版本", html: `<p><strong>Web3 是「資產與身分由你自己掌握」的網路。</strong></p><p>Web2 時代，你的帳號、照片、餘額都存在平台的伺服器裡；Web3 則把這些紀錄寫在公開的區塊鏈上，只要你持有錢包私鑰，就能直接證明「這是我的」。</p>` },
-        { title: "區塊鏈：一本全網共同記錄的帳本", html: `<p>想像一本帳本同時有上萬份副本，散落在全球不同電腦裡。每筆新交易要經過多數節點確認才能寫入，而一旦寫入，想偷偷改掉就得同時改掉大部分副本——幾乎不可能。</p><p>注意：鏈上「紀錄難以竄改」不代表「內容一定真實」。項目方寫在白皮書上的承諾，區塊鏈並不會幫你驗證。</p>` },
-        { title: "幣（Coin）與代幣（Token）", html: `<ul><li><strong>幣</strong>：一條鏈的原生資產，例如比特幣鏈上的 BTC、以太坊上的 ETH、Solana 上的 SOL，通常用來支付手續費（Gas）。</li><li><strong>代幣</strong>：透過智能合約「發行在別人鏈上」的資產，例如以太坊上的 USDT、UNI。</li></ul><p>同一個代幣可能存在於多條鏈上，轉帳時一定要確認<strong>鏈別</strong>一致。</p>` },
-        { title: "智能合約與穩定幣", html: `<p><strong>智能合約</strong>是部署在鏈上的程式：條件達成就自動執行，例如「存入 A 幣，自動換出 B 幣」。DeFi、NFT、鏈遊都是建立在合約之上。</p><p><strong>穩定幣</strong>是價格錨定法幣（多為美元）的代幣，常見有 USDT、USDC。幣圈裡大家多半用穩定幣當「現金」來計價與進出場。</p>` },
-        { title: "比特幣從哪裡來？", html: `<p>2008 年，化名「中本聰」的作者發表比特幣白皮書，提出不需要銀行也能點對點轉帳的電子現金系統；2009 年 1 月比特幣網路正式上線。BTC 總量上限約 2,100 萬枚，依規則逐步發行——稀缺，但不代表只漲不跌。</p><p>📄 白皮書原文可在官方網站 <a class="ext" href="https://bitcoin.org/bitcoin.pdf" target="_blank" rel="noopener">bitcoin.org</a> 閱讀。</p>` },
-        { title: "幣價為什麼會漲跌？", html: `<p>價格由買賣雙方共同決定。影響因素包括：總體經濟與利率、市場情緒、資金流入流出、代幣解鎖拋售、項目基本面、交易所上架／下架消息，以及監管政策。</p><p>新手最該記住的是：<strong>加密貨幣波動極大，單日 ±20% 並不罕見</strong>，只投入你輸得起的資金。</p>` }
-      ]
-    },
-    {
-      id: "02", emoji: "📖", title: "買幣前的必修名詞", intro: "市值、FDV、流動性、滑點、手續費",
-      sections: [
-        { title: "交易對", html: `<p>「BTC/USDT」代表用 USDT 買賣 BTC。斜線前面是你要買的資產，後面是你用來付款的計價資產。</p>` },
-        { title: "市值、FDV 與流通量", html: `<ul><li><strong>流通市值</strong> = 價格 × 目前流通量。</li><li><strong>FDV（完全稀釋估值）</strong> = 價格 × 最大供應量，代表「所有幣都放出來後」的估值。</li></ul><p>如果 FDV 遠大於流通市值，表示未來還有大量代幣會解鎖進入市場，可能形成賣壓。</p>` },
-        { title: "流動性與成交量", html: `<p>流動性好 = 隨時有人接你的單、價差小。流動性差的小幣，你可能「買得進、賣不掉」，或一賣價格就被砸穿。看 24 小時成交量與掛單深度，可以初步判斷流動性。</p>` },
-        { title: "價差、滑點與價格影響", html: `<p><strong>滑點</strong>是你預期的成交價與實際成交價的差距。下單金額越大、市場越淺，滑點越嚴重。在 DEX 兌換時可以設定「滑點容忍度」，但設太高容易被夾子（MEV）吃掉價差。</p>` },
-        { title: "手續費與網路費", html: `<ul><li><strong>交易手續費</strong>：交易所向你收的費用，分 Maker（掛單）與 Taker（吃單），掛單通常較便宜。</li><li><strong>提現費</strong>：把幣從交易所提出時收取。</li><li><strong>Gas 費</strong>：在鏈上操作時付給網路的費用，壅塞時會變貴。</li></ul><p>💡 透過<a href="#/exchanges">邀請碼註冊</a>，通常可享有手續費折扣。</p>` },
-        { title: "盈虧怎麼算？", html: `<p>報酬率 =（賣出價 − 買入價 − 手續費）÷ 投入成本。記得：虧損 50% 需要上漲 100% 才能回本，所以「先求不虧大錢」比「求翻倍」更重要。</p>` }
-      ]
-    },
-    {
-      id: "03", emoji: "🛒", title: "第一次在交易所買幣", intro: "註冊、KYC、入金、買入、提現全流程",
-      sections: [
-        { title: "第一步：選擇交易所並從官方管道註冊", html: `<p>挑選時看三件事：所在地區是否可用、是否支援你需要的入金方式、平台規模與儲備證明。可參考<a href="#/exchanges">交易所導航</a>，透過官方或邀請連結進入，避免點到假網站。</p>` },
-        { title: "第二步：完成 KYC 與安全設定", html: `<ul><li>完成實名認證（KYC），提高出入金額度。</li><li>開啟 <strong>2FA</strong>（建議用 Google Authenticator 等驗證器 App，而非簡訊）。</li><li>設定<strong>防釣魚碼</strong>：官方來信會帶上你設的暗號。</li><li>開啟<strong>提幣白名單</strong>，只允許提到你信任的地址。</li></ul>` },
-        { title: "第三步：入金", html: `<p>常見方式：信用卡快捷買幣、銀行轉帳、P2P（C2C）交易，或從其他平台轉入 USDT。</p><p><strong>P2P 注意事項</strong>：只跟高成交率、已認證的商家交易；嚴格按照平台流程付款與放幣，絕不在平台外私下交易；付款備註不要寫「買幣」等字眼以免被銀行風控。</p>` },
-        { title: "第四步：小額買入現貨", html: `<p>第一次建議用小金額練習：在「現貨」交易區選 BTC/USDT 或 ETH/USDT，用限價單買入，熟悉介面後再決定是否加碼。</p>` },
-        { title: "第五步：賣出與提現", html: `<p>賣出換回 USDT 後，可透過 P2P 賣出換成法幣，或轉回其他平台。提現前務必確認<strong>地址與鏈別</strong>，第一次提現先試一筆小額。</p>` },
-        { title: "交易所裡的各種帳戶", html: `<p>多數交易所把資金分成：資金帳戶、現貨帳戶、合約帳戶、理財帳戶等。如果「錢不見了」，先檢查是不是放在不同帳戶裡，需要先「劃轉」才能使用。</p>` }
-      ]
-    },
-    {
-      id: "04", emoji: "🏦", title: "交易所導航與挑選", intro: "CEX 與 DEX 差在哪？我該選哪一家？",
-      sections: [
-        { title: "CEX 與 DEX", html: `<ul><li><strong>CEX（中心化交易所）</strong>：如幣安、OKX。像券商一樣幫你保管資產，有客服、支援法幣，但你要信任平台。</li><li><strong>DEX（去中心化交易所）</strong>：如 Uniswap、Jupiter。直接用錢包和智能合約交易，資產自己保管，但要自己承擔操作風險。</li></ul>` },
-        { title: "邀請碼導航", html: `<p>以下是我自己在用的交易所，透過邀請連結註冊可享手續費折扣（依各平台當期活動為準）：</p><div data-embed="exchanges"></div>` },
-        { title: "怎麼選？", html: `<ul><li><strong>剛入門</strong>：選大型、幣種主流、介面完整的平台（Binance、OKX）。</li><li><strong>想追新幣</strong>：MEXC、Bitget 上幣速度快。</li><li><strong>想玩鏈上</strong>：OKX 內建 Web3 錢包很方便。</li><li><strong>想自動化交易</strong>：Pionex 的網格與定投機器人。</li></ul><p>建議至少開兩家交易所分散風險，不要把所有資產放在同一個平台。</p>` },
-        { title: "儲備證明（PoR）是什麼？", html: `<p>儲備證明是交易所公開「用戶資產有 1:1 足額儲備」的審計資料。它是重要參考，但只代表某個時間點的快照，不代表平台沒有其他負債。</p>` }
-      ]
-    },
-    {
-      id: "05", emoji: "📈", title: "現貨與合約入門", intro: "下單方式、K 線、槓桿與風險控制",
-      sections: [
-        { title: "訂單類型", html: `<ul><li><strong>市價單</strong>：立刻以當前最佳價格成交，快但可能有滑點。</li><li><strong>限價單</strong>：指定價格，價格到了才成交。</li><li><strong>止損／止盈單</strong>：價格觸發時自動賣出，幫你守住紀律。</li></ul>` },
-        { title: "K 線怎麼看？", html: `<p>一根 K 線包含開盤、收盤、最高、最低四個價格。實體代表開收盤區間，上下影線代表期間的最高與最低。先學會看支撐、壓力與趨勢，再碰指標。</p>` },
-        { title: "槓桿與合約", html: `<p>合約讓你用少量保證金控制較大部位，可以<strong>做多</strong>（看漲）也能<strong>做空</strong>（看跌）。10 倍槓桿下，價格反向 10% 你的保證金就可能歸零。</p>` },
-        { title: "全倉、逐倉與強平", html: `<ul><li><strong>逐倉</strong>：每個倉位獨立計算保證金，最多虧掉該倉位的保證金。</li><li><strong>全倉</strong>：整個帳戶餘額共用，一個倉位爆掉可能拖垮全部。</li><li><strong>強平（爆倉）</strong>：保證金不足時被系統強制平倉。</li></ul><p>新手建議：先用逐倉、低槓桿（≤3 倍），並且一定要設止損。</p>` },
-        { title: "資金費率", html: `<p>永續合約沒有到期日，靠「資金費率」讓價格貼近現貨。費率為正時，多方付費給空方；為負時反之。持倉越久，這筆成本越不能忽略。</p>` },
-        { title: "倉位管理：先想好最多虧多少", html: `<p>經典做法是「單筆最多虧總資金的 1–2%」。先決定止損位置，再反推可以開多大的倉位，而不是先開倉再祈禱。</p>` }
-      ]
-    },
-    {
-      id: "06", emoji: "👛", title: "錢包、助記詞與冷錢包", intro: "幣放在哪裡？誰握有鑰匙？",
-      sections: [
-        { title: "錢包其實是一把鑰匙", html: `<p>錢包本身不存放幣，幣都在鏈上；錢包保管的是能動用這些幣的<strong>私鑰</strong>。<em>Not your keys, not your coins.</em></p>` },
-        { title: "地址、私鑰、助記詞", html: `<ul><li><strong>地址</strong>：像銀行帳號，可以公開給別人轉帳給你。</li><li><strong>私鑰</strong>：像金庫鑰匙，任何人拿到就能轉走你的資產。</li><li><strong>助記詞</strong>：12 或 24 個英文單字，是私鑰的備份，可還原整個錢包。</li></ul><p>⚠️ 助記詞請手抄在紙上、離線保存；<strong>絕不拍照、截圖、存雲端或傳給任何人</strong>（包含自稱客服的人）。</p>` },
-        { title: "熱錢包 vs 冷錢包", html: `<ul><li><strong>熱錢包</strong>：手機或瀏覽器擴充錢包（MetaMask、OKX Wallet、Phantom），方便但連網。</li><li><strong>冷錢包</strong>：硬體錢包（Ledger、Trezor 等），私鑰不連網，適合長期大額存放。</li></ul>` },
-        { title: "我的分倉建議", html: `<ul><li><strong>交易所</strong>：放要交易的資金。</li><li><strong>熱錢包 A</strong>：日常鏈上互動、撸毛用，只放小額。</li><li><strong>冷錢包</strong>：長期持有的主要資產，不連任何不明網站。</li></ul><p>把「常用」與「存錢」分開，即使熱錢包出事，損失也有限。</p>` }
-      ]
-    },
-    {
-      id: "07", emoji: "🛡️", title: "安全與防詐指南", intro: "假網站、授權陷阱、常見詐騙手法",
-      sections: [
-        { title: "假官網與假 App", html: `<p>搜尋引擎廣告、社群私訊裡的連結都可能是釣魚站。請把官網加入書籤，App 只從官方商店或官網下載；網址多一個字母、換一個子網域都要提高警覺。</p>` },
-        { title: "連線、簽名、授權不一樣", html: `<ul><li><strong>連線</strong>：讓網站看見你的地址，風險較低。</li><li><strong>簽名</strong>：證明你是地址主人；但有些簽名（如 Permit）其實等同授權。</li><li><strong>授權（Approve）</strong>：允許合約動用你的代幣——這一步最危險。</li></ul><p>看不懂錢包彈窗內容時，<strong>不要按確認</strong>。</p>` },
-        { title: "無限授權與撤銷", html: `<p>很多 DApp 預設請求「無限授權」。授權過的合約若被駭或本身就是惡意合約，你的代幣會被轉走。定期到 <a class="ext" href="https://revoke.cash" target="_blank" rel="noopener">Revoke.cash</a> 檢查並撤銷不用的授權。斷開錢包連線 ≠ 撤銷授權。</p>` },
-        { title: "常見詐騙手法", html: `<ul><li>假客服私訊要你提供助記詞或「驗證錢包」。</li><li>保證獲利、帶單喊單、殺豬盤式交友投資。</li><li>空投到你錢包的不明代幣，引導你去網站「領取」。</li><li>地址污染：用跟你常用地址頭尾相同的假地址轉小額給你，等你從紀錄複製錯地址。</li></ul><p>記住：<strong>天上不會掉餡餅，著急的通常都是騙子。</strong></p>` },
-        { title: "帳號安全檢查清單", html: `<ul><li>☐ 每個交易所使用不同的強密碼</li><li>☐ 開啟驗證器 2FA 與防釣魚碼</li><li>☐ 開啟提幣白名單</li><li>☐ 助記詞離線手抄保存</li><li>☐ 定期撤銷不用的授權</li></ul>` }
-      ]
-    },
-    {
-      id: "08", emoji: "🔗", title: "第一次鏈上操作", intro: "收幣、轉帳、Gas、兌換與跨鏈",
-      sections: [
-        { title: "收幣與轉帳", html: `<p>收款時把地址給對方，並告訴對方<strong>鏈別</strong>（例如 USDT 走 TRC20 還是 ERC20）。轉帳時三件事一定要確認：地址、鏈別、金額。第一次轉帳先試小額。</p>` },
-        { title: "Gas 費要準備什麼幣？", html: `<p>在哪條鏈上操作，就要有那條鏈的原生幣當手續費：以太坊要 ETH、Solana 要 SOL、BNB Chain 要 BNB。錢包裡只有 USDT、沒有 Gas 幣，是新手最常卡住的原因。</p>` },
-        { title: "在 DEX 兌換", html: `<p>連接錢包 → 選擇要換出與換入的代幣 → 檢查價格影響與滑點 → 授權 → 確認交易。代幣請透過官方或區塊瀏覽器確認<strong>合約地址</strong>，同名假幣非常多。</p>` },
-        { title: "跨鏈橋", html: `<p>跨鏈橋把資產從 A 鏈搬到 B 鏈。優先使用官方橋或主流聚合器；跨鏈橋是駭客攻擊的熱門目標，不要把大額資產長時間放在橋上。</p>` }
-      ]
-    },
-    {
-      id: "09", emoji: "🐑", title: "撸毛與空投入門", intro: "用時間和互動換取早期項目的獎勵",
-      sections: [
-        { title: "什麼是撸毛？", html: `<p>「撸羊毛」指的是在項目早期參與測試網、互動、任務，期待未來項目發幣時獲得<strong>空投</strong>獎勵。成本主要是時間與 Gas，但沒有任何空投是保證的。</p>` },
-        { title: "常見的參與方式", html: `<ul><li><strong>測試網互動</strong>：領測試幣、試用產品功能。</li><li><strong>主網互動</strong>：實際使用 DEX、借貸、跨鏈等功能。</li><li><strong>積分活動</strong>：交易所或項目的 Points 計畫。</li><li><strong>社群任務</strong>：Galxe、Zealy 等平台上的任務。</li></ul>` },
-        { title: "撸毛防坑守則", html: `<ul><li>用專門的撸毛錢包，不放主要資產。</li><li>只從項目官方 X／Discord 取得連結。</li><li>要你先付錢或給助記詞的「空投」，一律是詐騙。</li><li>記錄互動過的項目與成本，避免花的 Gas 比拿到的還多。</li></ul><p>我平常會在 <a class="ext" href="https://twitter.com/yoaka__" target="_blank" rel="noopener">Twitter</a> 分享撸毛項目，歡迎追蹤。</p>` }
-      ]
-    },
-    {
-      id: "10", emoji: "🔍", title: "如何研究一個項目？", intro: "看用途、代幣經濟、數據與團隊",
-      sections: [
-        { title: "五個基本問題", html: `<ol><li>它解決什麼問題？真的有人在用嗎？</li><li>代幣有什麼用途？不持有代幣能不能用產品？</li><li>誰投資了它？團隊是否公開、有沒有黑歷史？</li><li>代幣怎麼分配？什麼時候解鎖？</li><li>鏈上數據（TVL、用戶數、收入）是否真實成長？</li></ol>` },
-        { title: "代幣經濟（Tokenomics）", html: `<p>重點看：總量、流通比例、團隊與投資人份額、解鎖時間表。大額解鎖前後常常伴隨賣壓。可以用 <a href="#/tools">工具箱</a> 裡的解鎖追蹤工具查詢。</p>` },
-        { title: "紅旗警訊", html: `<ul><li>合約未開源、權限集中在單一地址。</li><li>流動性未鎖定，前幾大地址持有極高比例。</li><li>社群只談價格不談產品，或大量機器人帳號。</li><li>承諾固定高報酬。</li></ul>` }
-      ]
-    },
-    {
-      id: "11", emoji: "🗺️", title: "Web3 玩法地圖", intro: "DeFi、NFT、Meme、RWA 各是什麼",
-      sections: [
-        { title: "DeFi 去中心化金融", html: `<p>用智能合約做到借貸、兌換、收益聚合、質押等金融服務。收益越高通常風險越高——合約漏洞、清算、脫鉤都可能發生。</p>` },
-        { title: "NFT", html: `<p>獨一無二的鏈上憑證，可代表藝術品、會員資格、遊戲道具。我自己也有在創作，歡迎逛逛我的 <a class="ext" href="https://opensea.io/under_insight" target="_blank" rel="noopener">OpenSea</a>。</p>` },
-        { title: "Meme 幣", html: `<p>以迷因、社群文化驅動的代幣，漲跌極端、多數歸零。玩 Meme 請當作娛樂，只用小額、設好停損。</p>` },
-        { title: "RWA 與質押", html: `<p><strong>RWA</strong>：把國債、房地產等現實資產代幣化上鏈。<strong>質押</strong>：鎖定代幣協助網路運作並獲得獎勵，流動性質押（LST）則讓你質押後仍能拿到可交易的憑證。</p>` }
-      ]
-    },
-    {
-      id: "12", emoji: "🆘", title: "出問題了怎麼辦？", intro: "充值沒到帳、轉錯鏈、錢包被盜",
-      sections: [
-        { title: "充值／提現沒到帳", html: `<p>先到區塊瀏覽器用交易哈希（TxID）查狀態：若顯示成功但交易所沒入帳，帶著 TxID 聯繫<strong>官方 App 內</strong>的客服；若還在等待，可能是網路壅塞。</p>` },
-        { title: "轉錯鏈或漏填 Memo", html: `<p>部分交易所可以申請找回（可能收費），請盡快聯繫官方客服並提供 TxID。轉到自己錢包的錯鏈資產，通常切換到對應網路就能看到。</p>` },
-        { title: "錢包被盜的緊急處理", html: `<ol><li>立刻用<strong>新的乾淨錢包</strong>（新助記詞）接收剩餘資產。</li><li>撤銷所有可疑授權。</li><li>檢查電腦與手機是否中毒、換掉被洩漏的密碼。</li><li>保留證據，必要時報警。</li></ol><p>⚠️ 被盜後最常遇到「幫你追回資產」的二次詐騙，千萬別再付錢。</p>` }
-      ]
-    }
-  ],
-
-  /* 幣圈黑話 */
+  /* 幣圈黑話：[詞, 解釋, 分類] */
   slang: [
-    ["GM / GN", "Good Morning / Good Night，Web3 社群的日常問候，也是本站名字的由來 ☀️"],
-    ["WAGMI", "We're All Gonna Make It，我們都會成功的。"],
-    ["NGMI", "Not Gonna Make It，這樣下去不會成功。"],
-    ["HODL", "死抱不放，長期持有。源自一次打錯字的 Hold。"],
-    ["DYOR", "Do Your Own Research，自己做研究，別盲目跟單。"],
-    ["FOMO", "害怕錯過，看到暴漲就衝動追高。"],
-    ["FUD", "恐懼、不確定、懷疑，散播利空消息的情緒。"],
-    ["撸毛 / 撸羊毛", "參與項目互動、任務，期待獲得空投獎勵。"],
-    ["韭菜", "被收割的散戶，割韭菜＝收割散戶。"],
-    ["梭哈", "全部資金押上，極不推薦。"],
-    ["抄底", "在價格下跌後買入，希望買在低點。"],
-    ["站崗", "買在高點後被套住，只能等回本。"],
-    ["Rug / 跑路", "項目方捲走資金或撤掉流動性。"],
-    ["鑽石手 / 紙手", "能扛住波動長期持有 / 一跌就賣。"],
-    ["Ape in", "像猿猴一樣不做研究就衝進去。"],
-    ["Degen", "高風險愛好者，什麼新奇的都敢玩。"],
-    ["巨鯨", "持有大量資金、能影響價格的地址。"],
-    ["土狗", "市值很小、風險極高的新幣。"],
-    ["Alpha", "尚未廣為人知的有價值資訊。"],
-    ["LFG", "Let's F***ing Go，衝啊！"],
-    ["Gas", "鏈上交易的手續費。"],
-    ["TVL", "鎖倉總價值，衡量 DeFi 協議規模的指標。"],
-    ["Airdrop", "空投，項目方免費發放代幣給符合條件的用戶。"],
-    ["CT", "Crypto Twitter，幣圈推特圈。"]
+    ["GM / GN", "Good Morning / Good Night，Web3 社群的日常問候，也是本站名字的由來 ☀️", "術語"],
+    ["DYOR", "Do Your Own Research，自己研究、自己查證，不把別人的意見當結論。", "術語"],
+    ["FOMO", "害怕錯過，看到暴漲就衝動追高。", "術語"],
+    ["FUD", "恐懼、不確定、懷疑。但不能拿這個詞否定所有質疑。", "術語"],
+    ["HODL", "長期持有不賣，源自一次打錯字的 Hold。", "術語"],
+    ["ATH / ATL", "歷史最高價／歷史最低價。", "術語"],
+    ["Bull / Bear", "看漲／看跌，也指牛市／熊市。", "術語"],
+    ["Whale 巨鯨", "持有大量資金、能影響價格的地址。", "術語"],
+    ["Alpha", "還沒被大家知道的有價值資訊。", "術語"],
+    ["TVL", "鎖倉總價值，衡量 DeFi 協議規模的指標。", "術語"],
+    ["Gas", "鏈上交易的手續費。", "術語"],
+    ["Airdrop 空投", "項目方免費發代幣給符合條件的用戶。", "術語"],
+    ["撸毛", "參與項目互動、任務，期待拿到空投。", "術語"],
+    ["Rug / 跑路", "項目方捲款或撤走流動性。", "術語"],
+    ["Degen", "高風險愛好者，什麼新東西都敢衝。", "術語"],
+    ["CT", "Crypto Twitter，幣圈推特圈。", "術語"],
+    ["WAGMI / NGMI", "我們都會成功／這樣下去不會成功。", "術語"],
+    ["LFG", "Let's F***ing Go，衝啊！", "術語"],
+    ["長期看好", "短期先不要問我。", "玩梗"],
+    ["健康回調", "跌了，但我想講得好聽一點。", "玩梗"],
+    ["鑽石手", "抱得住……也可能只是賣不下手。", "玩梗"],
+    ["紙手", "剛賣就漲、剛買就慌。", "玩梗"],
+    ["繳學費", "錢變少了，希望經驗有變多。", "玩梗"],
+    ["格局打開", "先忍住不要賣。", "玩梗"],
+    ["價值投資", "本來想做短線，被套之後改成長期。", "玩梗"],
+    ["最後一跌", "上次也是這樣說的。", "玩梗"],
+    ["韭菜", "被收割的散戶。割韭菜＝收割散戶。", "玩梗"],
+    ["站崗", "買在山頂，只能等回本。", "玩梗"],
+    ["梭哈", "全部押上。不推薦，真的不推薦。", "玩梗"],
+    ["土狗", "市值超小、風險超高的新幣。", "玩梗"],
+    ["Ape in", "像猿猴一樣不研究就衝進去。", "玩梗"],
+    ["抄底抄在半山腰", "以為是底，其實下面還有地下室。", "玩梗"]
   ],
 
   /* 工具箱 */
   tools: [
-    { group: "行情與數據", items: [
-      ["CoinGecko", "https://www.coingecko.com", "幣價、市值、交易所數據"],
-      ["CoinMarketCap", "https://coinmarketcap.com", "幣價與排行"],
+    { group: "行情與基本資料", items: [
+      ["CoinGecko", "https://www.coingecko.com", "幣價、市值、供應量"],
+      ["CoinMarketCap", "https://coinmarketcap.com", "行情、排行、交易所數據"],
       ["TradingView", "https://www.tradingview.com", "看 K 線、畫圖分析"],
-      ["CoinGlass", "https://www.coinglass.com", "合約持倉、資金費率、爆倉數據"]
+      ["CoinGlass", "https://www.coinglass.com", "合約持倉、資金費率、爆倉"]
     ]},
-    { group: "鏈上查詢", items: [
-      ["Etherscan", "https://etherscan.io", "以太坊區塊瀏覽器"],
-      ["Solscan", "https://solscan.io", "Solana 區塊瀏覽器"],
-      ["BscScan", "https://bscscan.com", "BNB Chain 區塊瀏覽器"],
-      ["DeBank", "https://debank.com", "多鏈資產與 DeFi 部位總覽"],
-      ["Arkham", "https://intel.arkm.com", "追蹤巨鯨與機構地址"]
+    { group: "區塊瀏覽器", items: [
+      ["Etherscan", "https://etherscan.io", "以太坊交易、地址、合約"],
+      ["BscScan", "https://bscscan.com", "BNB Chain 交易查詢"],
+      ["Solscan", "https://solscan.io", "Solana 交易查詢"],
+      ["Tronscan", "https://tronscan.org", "TRON（TRC-20 USDT）查詢"],
+      ["Arbiscan", "https://arbiscan.io", "Arbitrum 交易查詢"]
     ]},
-    { group: "項目研究", items: [
+    { group: "鏈上數據與研究", items: [
+      ["DEX Screener", "https://dexscreener.com", "鏈上交易對、池子、新幣"],
       ["DefiLlama", "https://defillama.com", "TVL、協議收入、費用"],
+      ["DeBank", "https://debank.com", "多鏈資產與 DeFi 部位"],
+      ["Arkham", "https://intel.arkm.com", "追蹤巨鯨與機構地址"],
       ["RootData", "https://www.rootdata.com", "融資與投資機構資料"],
       ["Tokenomist", "https://tokenomist.ai", "代幣解鎖時間表"],
-      ["Dune", "https://dune.com", "社群製作的鏈上數據看板"]
+      ["Dune", "https://dune.com", "鏈上數據看板"]
     ]},
-    { group: "安全", items: [
-      ["Revoke.cash", "https://revoke.cash", "檢查與撤銷代幣授權"],
-      ["Scam Sniffer", "https://www.scamsniffer.io", "釣魚網站與詐騙偵測"],
-      ["GoPlus", "https://gopluslabs.io", "代幣合約安全檢測"]
+    { group: "新聞資訊", items: [
+      ["動區動趨", "https://www.blocktempo.com", "繁中區塊鏈新聞"],
+      ["鏈新聞 ABMedia", "https://abmedia.io", "繁中加密貨幣新聞"],
+      ["PANews", "https://www.panewslab.com", "中文快訊與深度文章"]
+    ]},
+    { group: "安全檢查", items: [
+      ["Revoke.cash", "https://revoke.cash", "查授權、撤授權"],
+      ["GoPlus", "https://gopluslabs.io", "代幣與授權風險檢測"],
+      ["Scam Sniffer", "https://www.scamsniffer.io", "釣魚網站偵測"]
     ]},
     { group: "撸毛任務", items: [
-      ["Galxe", "https://galxe.com", "項目任務與憑證平台"],
+      ["Galxe", "https://galxe.com", "項目任務與憑證"],
       ["Zealy", "https://zealy.io", "社群任務平台"],
       ["Layer3", "https://layer3.xyz", "鏈上互動任務"]
+    ]},
+    { group: "學習資源", items: [
+      ["Binance Academy", "https://academy.binance.com/zt", "繁中加密入門百科"],
+      ["ethereum.org", "https://ethereum.org/zh-tw/security/", "以太坊官方安全指南"],
+      ["Bitcoin 白皮書", "https://bitcoin.org/bitcoin.pdf", "中本聰原文"]
     ]}
   ]
-};
+});
